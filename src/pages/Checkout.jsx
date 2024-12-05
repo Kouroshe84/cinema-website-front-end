@@ -66,11 +66,11 @@ const Checkout = () => {
 
         //if order successfully update
         const data = await response.json();
-        //console.log(data);
+        console.log(data);
         
-        if (data.orderId) {
+        if (data.orderid) {
             alert("Payment successful! Redirecting to confirmation page...");
-            navigate(`/confirmation/${data.orderId}`);
+            navigate(`/confirmation/${data.orderid}`);
         }   else{
             alert("Order failed. Please try again.");
         }
