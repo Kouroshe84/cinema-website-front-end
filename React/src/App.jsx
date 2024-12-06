@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import CreatePage from './pages/CreatePage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
+import SeatSelection from './pages/SeatSelection';
+import Checkout from './pages/Checkout';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [movies, setMovies] = useState([]); 
+
+  useEffect(() => {
+    // Fetch movie data from API (replace with your actual API call)
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch('/api/movies'); // Example API endpoint
+        const data = await response.json();
+        setMovies(data); 
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Box minH="100vh">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage movies={movies} />} /> 
+          <Route path="/create" element={<CreatePage />} />
+          <Route path="/movie/:id" element={<MovieDetailsPage />} /> 
+          <Route path="/seat-selection/:movieId" element={<SeatSelection />} /> 
+          <Route path="/checkout" element={<Checkout />} /> 
+        </Routes>
+      </Box>
+    </Router>
+  );
 }
 
-export default App
+export default App;
