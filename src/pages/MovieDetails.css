@@ -1,0 +1,24 @@
+.movie-details {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* .movie-details img {
+    max-width: 300px;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+.showtimes button {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #282c34;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.showtimes button:hover {
+    background-color: #61dafb;
+} */
