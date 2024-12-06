@@ -10,7 +10,7 @@ const Confirmation = () => {
         const fetchOrder = async () => {
             const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/orders/${id}`);
             const data = await response.json();
-            setOrder(data.order);
+            setOrder(data);
         };
         fetchOrder();
     }, [id]);
