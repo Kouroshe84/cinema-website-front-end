@@ -5,7 +5,7 @@ import { Box } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import CreatePage from './pages/CreatePage';
-import MovieDetailsPage from './pages/MovieDetailsPage';// importing movie details 
+import MovieDetailsPage from './pages/MovieDetailsPage';
 import SeatSelection from './pages/SeatSelection';
 import Checkout from './pages/Checkout';
 
