@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import movies from "../data/movies";
 import "./Homepage.css";
+import MovieCarousel from "./components/MovieCarousel";
 
 const Homepage = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -21,6 +22,11 @@ const Homepage = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </header>
+            {/* Movie Carousel */}
+            <div>
+                <MovieCarousel/>
+            </div>
+            {/* Movie Grid */}
             <div className="movie-grid">
                 {filteredMovies.map((movie) => (
                     <div key={movie.id} className="movie-card">
