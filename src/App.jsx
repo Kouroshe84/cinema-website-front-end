@@ -8,6 +8,7 @@ import Confirmation from "./pages/Confirmation";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import CreatePage from "./pages/CreatePage";
+import Footer from "./pages/components/Footer";
 import './App.css';
 
 const App = () => {
@@ -32,6 +33,11 @@ const App = () => {
                     <Route path="/contact" element={<ContactUs/>} />
                     <Route path="/create" element={<CreatePage />} />
                 </Routes>
+
+                {/* Footer */}
+                <div>
+                    <Footer/>
+                </div>
             </div>
     );
 };
