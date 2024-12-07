@@ -33,3 +33,35 @@
   max-width: 100%;
   border-radius: 5px;
 }
+
+
+/* Navbar */
+.content{
+  margin-top: 70px; /* Adjust based on navbar height */
+  padding: 1rem;
+}
+
+.navbar {
+  width: 100%; /* Full width */
+  position: fixed; /* Fixed at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* High z-index for layering */
+  background-color: #fff; /* White background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 1rem 2rem; /* Add padding for a clean layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333; 
+  margin: 0 1rem; 
+  font-size: 1.1rem; 
+}
+
+.navbar a:hover {
+  color: #007bff; /* Change color on hover (blue) */
+}
