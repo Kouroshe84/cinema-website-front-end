@@ -1,23 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import movies from "../data/movies";
 import "./SeatSelection.css";
 
 const SeatSelection = () => {
-    const { id } = useParams(); //movieId
-    const movie = movies.find((m) => m.id === parseInt(id)); 
-
+    const { id } = useParams(); // Movie ID from the URL
+    const movie = movies.find((m) => m.id === parseInt(id)); // Find the movie based on ID
+    
     const location = useLocation();
-    const { selectedShowTime } = location.state || {};
+    const { selectedShowTime } = location.state || {}; // Show time from location.state
 
-    const [selectedSeats, setSelectedSeats] = useState([]); //set selected seats 
-    const seatPrice = 10;
+    const [bookedSeats, setBookedSeats] = useState([]); // List of available seats
+    const [selectedSeats, setSelectedSeats] = useState([]); // List of selected seats
+    const seatPrice = 10; 
+
+    useEffect(() => {
+        const fetchAvailableSeats = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/orders/movie/${movie.id}`);
+                const data = await response.json();
+                console.log("Fetched Orders:", data);
+                const bookedSeats = data.filter((d) => d.showTime === selectedShowTime).flatMap((d) => d.seats);                
+                setBookedSeats(bookedSeats);
+                console.log(bookedSeats);
+            } catch (error) {
+                console.error("Error fetching available seats:", error);
+            }
+        };
+    
+        if (movie) {
+            fetchAvailableSeats();
+        }
+    }, [movie]);
 
     const toggleSeat = (seat) => {
-        if (selectedSeats.includes(seat)) {
-            setSelectedSeats(selectedSeats.filter((s) => s !== seat)); //if seat is selected, set the selectedArray to exclude that seat
+        if (!bookedSeats.includes(seat) && selectedSeats.includes(seat)) {
+            setSelectedSeats(selectedSeats.filter((s) => s !== seat)); // Deselect the seat
         } else {
-            setSelectedSeats([...selectedSeats, seat]); //if seat is not selected, set the selectedSeat to the selectedArray
+            setSelectedSeats([...selectedSeats, seat]); // Select the seat
         }
     };
 
@@ -39,9 +59,11 @@ const SeatSelection = () => {
                     return (
                         <button
                             key={seat}
-                            className={`seat ${
+                            className={`seat ${ 
+                                bookedSeats.includes(seat) ? "booked" : 
                                 selectedSeats.includes(seat) ? "selected" : ""
                             }`}
+                            disabled = {bookedSeats.includes(seat)}
                             onClick={() => toggleSeat(seat)}
                         >
                             {seat}

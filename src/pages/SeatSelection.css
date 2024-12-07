@@ -23,6 +23,12 @@
     color: white;
 }
 
+.seat.booked {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .summary {
     margin-top: 2rem;
 }
