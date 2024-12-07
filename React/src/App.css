@@ -1,0 +1,107 @@
+/* Root Container */
+#root {
+  min-height: 100vh; /* Set minimum height to 100% of viewport height */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Set main axis to vertical */
+  max-width: 100%; /* Spans the full width of the screen */
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  box-sizing: border-box; /* Ensure padding doesn't overflow */
+}
+
+/* Navbar */
+.navbar {
+  width: 100%; /* Full width */
+  position: fixed; /* Fixed at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* High z-index for layering */
+  background-color: #fff; /* White background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 1rem 2rem; /* Add padding for a clean layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* Logo Animation */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Card Styling */
+.card {
+  padding: 2em;
+  margin: 1em;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: left;
+  width: calc(100% - 4em); /* Maintain responsive spacing */
+  max-width: 300px; /* Limit maximum width for cards */
+  display: inline-block; /* Align cards in rows */
+}
+
+/* "Read the Docs" Styling */
+.read-the-docs {
+  color: #888;
+}
+
+/* Responsive Body */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Main Content Adjustment */
+main {
+  flex-grow: 1; /* Allow main content to grow and fill remaining space */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds screen height */
+  margin-top: 80px; /* To avoid overlapping with fixed navbar */
+  padding: 1rem;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  .card {
+    width: 100%; /* Cards take full width on small screens */
+    margin: 0.5em 0;
+  }
+}
+.carousel-item img {
+  width: 100%; /* Make the image take the full width of the carousel */
+  height: auto; /* Maintain the aspect ratio */
+}
