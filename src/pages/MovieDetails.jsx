@@ -22,7 +22,7 @@ const MovieDetails = () => {
                 setMovie(movieData);
 
                 // Fetch showtimes for the movie
-                const showtimesResponse = await fetch(`${apiBaseUrl}/api/movies/${id}/showtimes`);
+                const showtimesResponse = await fetch(`${apiBaseUrl}/api/showtimes/${id}`);
                 const showtimesData = await showtimesResponse.json();
                 setShowtimes(showtimesData);
             } catch (err) {
