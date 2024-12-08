@@ -13,32 +13,30 @@ import './App.css';
 
 const App = () => {
     return (
-            <div className="content">
-                {/* Navigation Bar */}
-                <nav className="navbar">
-                    <Link to="/">Home Page</Link>
-                    <Link to="/create">Create New Movie</Link>
-                    <Link to="/about">About Us</Link>
-                    <Link to="/contact">Contact Us</Link>
-                </nav>
+        <div className="content">
+            {/* Navigation Bar */}
+            <nav className="navbar">
+                <Link to="/">Home Page</Link>
+                <Link to="/create">Create New Movie</Link>
+                <Link to="/about">About Us</Link>
+                <Link to="/contact">Contact Us</Link>
+            </nav>
 
-                {/* Page Routes */}
-                <Routes>
-                    <Route path="/" element={<Homepage />} />
-                    <Route path="/movies/:id" element={<MovieDetails />} />
-                    <Route path="/movies/:id/seats" element={<SeatSelection />} />
-                    <Route path="/movies/:id/checkout" element={<Checkout />} />
-                    <Route path="/confirmation/:id" element={<Confirmation />} />
-                    <Route path="/about" element={<AboutUs/>} />
-                    <Route path="/contact" element={<ContactUs/>} />
-                    <Route path="/create" element={<CreatePage />} />
-                </Routes>
+            {/* Page Routes */}
+            <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/movies/:id" element={<MovieDetails />} />
+                <Route path="/movies/:id/seats" element={<SeatSelection />} />
+                <Route path="/movies/:id/checkout" element={<Checkout />} />
+                <Route path="/confirmation/:id" element={<Confirmation />} />
+                <Route path="/about" element={<AboutUs />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/create" element={<CreatePage />} />
+            </Routes>
 
-                {/* Footer */}
-                <div>
-                    <Footer/>
-                </div>
-            </div>
+            {/* Footer */}
+            <Footer />
+        </div>
     );
 };
 

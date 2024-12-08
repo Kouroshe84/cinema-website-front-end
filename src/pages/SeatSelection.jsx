@@ -1,37 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
-import movies from "../data/movies";
 import "./SeatSelection.css";
 
 const SeatSelection = () => {
     const { id } = useParams(); // Movie ID from the URL
-    const movie = movies.find((m) => m.id === parseInt(id)); // Find the movie based on ID
-    
     const location = useLocation();
-    const { selectedShowTime } = location.state || {}; // Show time from location.state
-
-    const [bookedSeats, setBookedSeats] = useState([]); // List of available seats
+    const { selectedShowTime } = location.state || {}; // Selected showtime from MovieDetails
+    const [movie, setMovie] = useState(null);
+    const [bookedSeats, setBookedSeats] = useState([]); // List of booked seats
     const [selectedSeats, setSelectedSeats] = useState([]); // List of selected seats
-    const seatPrice = 10; 
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const seatPrice = 10;
 
+    // Fetch movie and booked seats data
     useEffect(() => {
-        const fetchAvailableSeats = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/orders/movie/${movie.id}`);
-                const data = await response.json();
-                console.log("Fetched Orders:", data);
-                const bookedSeats = data.filter((d) => d.showTime === selectedShowTime).flatMap((d) => d.seats);                
-                setBookedSeats(bookedSeats);
-                console.log(bookedSeats);
-            } catch (error) {
-                console.error("Error fetching available seats:", error);
+                const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+                // Fetch movie details
+                const movieResponse = await fetch(`${apiBaseUrl}/api/movies/${id}`);
+                const movieData = await movieResponse.json();
+                setMovie(movieData);
+
+                // Fetch booked seats for the selected showtime
+                const seatsResponse = await fetch(`${apiBaseUrl}/api/orders/movie/${id}`);
+                const orders = await seatsResponse.json();
+                const seats = orders
+                    .filter((order) => order.showTime === selectedShowTime)
+                    .flatMap((order) => order.seats);
+                setBookedSeats(seats);
+            } catch (err) {
+                console.error("Error fetching data:", err);
+                setError("Failed to load seating data.");
+            } finally {
+                setLoading(false);
             }
         };
-    
-        if (movie) {
-            fetchAvailableSeats();
-        }
-    }, [movie]);
+
+        fetchData();
+    }, [id, selectedShowTime]);
 
     const toggleSeat = (seat) => {
         if (!bookedSeats.includes(seat) && selectedSeats.includes(seat)) {
@@ -43,27 +52,30 @@ const SeatSelection = () => {
 
     const totalPrice = selectedSeats.length * seatPrice;
 
-    if (!movie) {
-        return <h2>Movie not found</h2>;
-    }
+    if (loading) return <h2>Loading seating data...</h2>;
+    if (error) return <h2>{error}</h2>;
+
+    if (!movie) return <h2>Movie not found.</h2>;
 
     return (
-        //Array.from() generates 30 slots with mapFunction to create 30 seat button with key S${i}
         <div className="seat-selection">
             <Link to={`/movies/${id}`}>Back to Movie Details</Link>
             <h1>Select Seats for {movie.title}</h1>
-            <h1>Show Time: {selectedShowTime}</h1>
+            <h2>Showtime: {selectedShowTime}</h2>
             <div className="seating">
                 {Array.from({ length: 30 }, (_, i) => {
                     const seat = `S${i + 1}`;
                     return (
                         <button
                             key={seat}
-                            className={`seat ${ 
-                                bookedSeats.includes(seat) ? "booked" : 
-                                selectedSeats.includes(seat) ? "selected" : ""
+                            className={`seat ${
+                                bookedSeats.includes(seat)
+                                    ? "booked"
+                                    : selectedSeats.includes(seat)
+                                    ? "selected"
+                                    : ""
                             }`}
-                            disabled = {bookedSeats.includes(seat)}
+                            disabled={bookedSeats.includes(seat)}
                             onClick={() => toggleSeat(seat)}
                         >
                             {seat}
@@ -74,10 +86,10 @@ const SeatSelection = () => {
             <div className="summary">
                 <h3>Selected Seats: {selectedSeats.join(", ") || "None"}</h3>
                 <h3>Total Price: ${totalPrice}</h3>
-                <Link 
+                <Link
                     to={`/movies/${id}/checkout`}
-                    state={{ selectedSeats, selectedShowTime, totalPrice }} // Example showtime
->
+                    state={{ selectedSeats, selectedShowTime, totalPrice }}
+                >
                     <button disabled={selectedSeats.length === 0}>
                         Proceed to Checkout
                     </button>

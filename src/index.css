@@ -66,3 +66,9 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.carousel-poster {
+  height: 400px; /* Sets the height you want */
+  object-fit: cover; /* Ensures image scales to fit the container */
+  object-position: center; /* Centers the image */
+}
