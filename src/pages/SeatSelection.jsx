@@ -61,7 +61,7 @@ const SeatSelection = () => {
         <div className="seat-selection">
             <Link to={`/movies/${id}`}>Back to Movie Details</Link>
             <h1>Select Seats for {movie.title}</h1>
-            <h2>Showtime: {selectedShowTime}</h2>
+            {selectedShowTime && <h2>Showtime: {selectedShowTime}</h2>}
             <div className="seating">
                 {Array.from({ length: 30 }, (_, i) => {
                     const seat = `S${i + 1}`;

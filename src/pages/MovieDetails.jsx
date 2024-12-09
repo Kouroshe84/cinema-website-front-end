@@ -28,7 +28,7 @@ const MovieDetails = () => {
                 setMovie(movieData);
 
                 // Fetch showtimes
-                const showtimesResponse = await fetch(`${apiBaseUrl}/api/showtimes/${id}`);
+                const showtimesResponse = await fetch(`${apiBaseUrl}/api/showtimes/movie/${id}`);
                 if (!showtimesResponse.ok) {
                     throw new Error(`Failed to fetch showtimes: ${showtimesResponse.status}`);
                 }
