@@ -4,6 +4,7 @@ import "./SeatSelection.css";
 
 const SeatSelection = () => {
     const { id } = useParams(); // Movie ID from the URL
+    //console.log(`movieId: ${id}`);
     const location = useLocation();
     const { selectedShowTime } = location.state || {}; // Selected showtime from MovieDetails
     const [movie, setMovie] = useState(null);
@@ -23,6 +24,7 @@ const SeatSelection = () => {
                 const movieResponse = await fetch(`${apiBaseUrl}/api/movies/${id}`);
                 const movieData = await movieResponse.json();
                 setMovie(movieData);
+                console.log(movieData);
 
                 // Fetch booked seats for the selected showtime
                 const seatsResponse = await fetch(`${apiBaseUrl}/api/orders/movie/${id}`);
