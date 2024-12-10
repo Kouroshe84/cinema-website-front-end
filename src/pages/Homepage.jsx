@@ -57,7 +57,8 @@ const Homepage = () => {
                         <img src={movie.posterUrl || "https://via.placeholder.com/300x450"} alt={movie.title} />
                         <h2>{movie.title}</h2>
                         <p>{movie.genre}</p>
-                        <Link to={`/seat-selection/${movie._id}`}>Get Tickets</Link>
+                        <Link to={`/movies/${movie._id}`}>Get Tickets</Link>
+                        {/* <Link to={`/seat-selection/${movie._id}`}>Get Tickets</Link> */}
                     </div>
                 ))}
             </div>
