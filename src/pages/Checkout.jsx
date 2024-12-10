@@ -67,17 +67,19 @@ const Checkout = () => {
 
     try {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-      const response = await axios.post(`${apiBaseUrl}/api/orders`, {
-        userId: "user_456", // Replace with actual user ID from authentication
-        movieId: id,
+      const order = {
+        userid: "user_456",
+        movieid: id,
         seats: selectedSeats,
         totalPrice: totalPrice,
-        showTime: selectedShowTime,
-      });
-
-      if (response.data && response.data.orderId) {
+        showTime: selectedShowTime
+      };
+      //console.log(order);
+      const response = await axios.post(`${apiBaseUrl}/api/orders`, order);
+      //console.log(response.data.order.orderid);
+      if (response.data.order.orderid) {
         alert("Payment successful! Redirecting to confirmation page...");
-        navigate(`/confirmation/${response.data.orderId}`);
+        navigate(`/confirmation/${response.data.order.orderid}`);
       } else {
         alert("Order failed. Please try again.");
       }

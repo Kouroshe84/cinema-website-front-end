@@ -4,6 +4,7 @@ import "./MovieDetails.css";
 
 const MovieDetails = () => {
     const { id } = useParams();
+    console.log(id);
     const [movie, setMovie] = useState(null);
     const [showtimes, setShowtimes] = useState([]);
     const [selectedShowTime, setSelectedShowTime] = useState(null);
@@ -83,7 +84,8 @@ const MovieDetails = () => {
                 )}
             </div>
             <Link
-                to={`/movies/${id}/seats`}
+                // to={`/movies/${id}/seats`}
+                to={`/seat-selection/${id}`}
                 state={{ selectedShowTime }}
             >
                 <button disabled={!selectedShowTime}>Select Seats</button>
