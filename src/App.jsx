@@ -8,6 +8,7 @@ import Confirmation from "./pages/Confirmation";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import CreatePage from "./pages/CreatePage";
+import Account from "./pages/Account";
 import Footer from "./pages/components/Footer";
 import './App.css';
 
@@ -20,6 +21,7 @@ const App = () => {
                 <Link to="/create">Create New Movie</Link>
                 <Link to="/about">About Us</Link>
                 <Link to="/contact">Contact Us</Link>
+                <Link to="/account">Account</Link>
             </nav>
 
             {/* Page Routes */}
@@ -32,6 +34,7 @@ const App = () => {
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/create" element={<CreatePage />} />
+                <Route path="/account" element={<Account/>} />
             </Routes>
 
             {/* Footer */}

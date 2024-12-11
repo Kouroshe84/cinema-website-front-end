@@ -1,0 +1,75 @@
+/* Account.css */
+
+.account-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.account-form {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.account-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.account-form input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.account-form input:focus {
+    border-color: #0066cc;
+    outline: none;
+}
+
+.account-form .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.account-form .submit-btn:hover {
+    background-color: #005bb5;
+}
+
+.switch-account {
+    margin-top: 15px;
+}
+
+.switch-account span {
+    font-size: 14px;
+    color: #555;
+}
+
+.switch-account button {
+    background: none;
+    border: none;
+    color: #0066cc;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.switch-account button:hover {
+    text-decoration: underline;
+}

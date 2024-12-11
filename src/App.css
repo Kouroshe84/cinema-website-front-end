@@ -65,3 +65,13 @@
 .navbar a:hover {
   color: #007bff; /* Change color on hover (blue) */
 }
+
+
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+}
