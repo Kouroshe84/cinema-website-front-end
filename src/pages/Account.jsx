@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Account.css'; // Ensure you add the CSS for this file
 
 const Account = ({ setUser }) => {
@@ -10,6 +11,7 @@ const Account = ({ setUser }) => {
         password: '',
         confirmPassword: '',
     });
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -17,27 +19,45 @@ const Account = ({ setUser }) => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = () => {
-        if (isSignUp) {
-            if (!formData.name || !formData.email || !formData.password) {
-                alert('All fields are required!');
-                return;
+    const handleSubmit = async () => {
+        setErrorMessage(''); // Clear any existing errors
+        try {
+            if (isSignUp) {
+                if (!formData.name || !formData.email || !formData.password) {
+                    setErrorMessage('All fields are required!');
+                    return;
+                }
+                if (formData.password !== formData.confirmPassword) {
+                    setErrorMessage('Passwords do not match!');
+                    return;
+                }
+                // Call the backend to create a new user
+                const response = await axios.post('/api/users', {
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                });
+                alert('Sign-Up successful!');
+                setUser(response.data.name);
+                navigate('/');
+            } else {
+                if (!formData.email || !formData.password) {
+                    setErrorMessage('Email and Password are required!');
+                    return;
+                }
+                // Call the backend to authenticate the user
+                const response = await axios.post('/api/users/login', {
+                    email: formData.email,
+                    password: formData.password,
+                });
+                alert('Login successful!');
+                setUser(response.data.name);
+                navigate('/');
             }
-            if (formData.password !== formData.confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-            alert('Sign-Up successful!');
-            setUser(formData.name);
-            navigate('/');
-        } else {
-            if (!formData.email || !formData.password) {
-                alert('Email and Password are required!');
-                return;
-            }
-            alert('Login successful!');
-            setUser(formData.email);
-            navigate('/');
+        } catch (error) {
+            const message =
+                error.response?.data?.message || 'An error occurred. Please try again.';
+            setErrorMessage(message);
         }
     };
 
@@ -45,6 +65,8 @@ const Account = ({ setUser }) => {
         <div className="account-container">
             <div className="account-form">
                 <h2>{isSignUp ? 'Create an Account' : 'Login to Your Account'}</h2>
+
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
 
                 {isSignUp && (
                     <input
