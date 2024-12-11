@@ -1,0 +1,56 @@
+.featured-movies-container {
+    padding: 20px;
+    text-align: center; /* Center-align the title and other text */
+    background-color: #f8f9fa; /* Light background for the section */
+    border-radius: 10px; /* Smooth corners for the section */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for better separation */
+    margin: 20px auto;
+    max-width: 1200px; /* Restrict the max width of the section */
+}
+
+.featured-movies-container h2 {
+    font-size: 2rem;
+    color: #333; /* Darker text for visibility */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.carousel-poster {
+    max-height: 450px; /* Limit the height of posters */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border-radius: 10px; /* Rounded corners for the images */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow to the posters */
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background for the text */
+    color: #fff; /* White text for contrast */
+    padding: 10px 15px;
+    border-radius: 5px; /* Rounded edges for the caption box */
+    bottom: 20px; /* Adjust the position of the caption */
+    text-align: center;
+}
+
+.carousel-caption h5 {
+    font-size: 1.5rem; /* Larger font size for the movie title */
+    font-weight: bold;
+}
+
+.carousel-caption p {
+    font-size: 1rem; /* Smaller font for the genre */
+    margin-top: 5px;
+}
+
+.carousel .carousel-indicators [data-bs-target] {
+    background-color: #333; /* Darker indicators */
+}
+
+.carousel .carousel-indicators .active {
+    background-color: #4caf50; /* Highlighted indicator in green */
+}
+
+.carousel .carousel-control-prev-icon,
+.carousel .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black arrows */
+    border-radius: 50%;
+    padding: 10px;
+}

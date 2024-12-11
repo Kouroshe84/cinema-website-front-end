@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import './MovieCarousel.css';
 
 const MovieCarousel = () => {
   const [movies, setMovies] = useState([]);

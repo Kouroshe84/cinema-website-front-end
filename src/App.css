@@ -1,55 +1,101 @@
+/* Header Styling */
 .App-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #282c34;
-  color: white;
+  background-color: #0A3981; /* Dark Blue */
+  color: #D4EBF8; /* Light Blue */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
+/* Search Bar Styling */
 .search-bar {
   padding: 0.5rem;
   width: 300px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #1F509A; /* Medium Blue */
+  background-color: #D4EBF8; /* Light Blue */
+  color: #0A3981; /* Dark Blue */
+  font-size: 1rem;
 }
 
+.search-bar::placeholder {
+  color: #1F509A; /* Medium Blue */
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #E38E49; /* Accent Orange */
+}
+
+/* Movie Grid Styling */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: #D4EBF8; /* Light Blue */
 }
 
+/* Movie Card Styling */
 .movie-card {
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 1rem;
+  background-color: #FFFFFF; /* White */
+  border: 2px solid #1F509A; /* Medium Blue */
+  border-radius: 12px;
+  padding: 1.5rem;
   text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Elevated shadow */
 }
 
 .movie-card img {
   max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.movie-card h3 {
+  color: #0A3981; /* Dark Blue */
+  font-size: 1.2rem;
+}
+
+.movie-card p {
+  color: #1F509A; /* Medium Blue */
+  font-size: 1rem;
+}
+
+.movie-card a {
+  display: inline-block;
+  text-decoration: none;
+  color: #FFFFFF; /* White */
+  background-color: #E38E49; /* Accent Orange */
+  padding: 0.6rem 1.2rem;
   border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-
-/* Navbar */
-.content{
-  margin-top: 70px; /* Adjust based on navbar height */
-  padding: 1rem;
+.movie-card a:hover {
+  background-color: #0A3981; /* Slightly darker orange */
 }
 
+/* Navbar Styling */
 .navbar {
-  width: 100%; /* Full width */
-  position: fixed; /* Fixed at the top */
+  width: 100%;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000; /* High z-index for layering */
-  background-color: #fff; /* White background */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  padding: 1rem 2rem; /* Add padding for a clean layout */
+  z-index: 1000;
+  background-color: #1F509A; /* Medium Blue */
+  color: #D4EBF8; /* Light Blue */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -57,21 +103,21 @@
 
 .navbar a {
   text-decoration: none;
-  color: #333; 
-  margin: 0 1rem; 
-  font-size: 1.1rem; 
+  color: #D4EBF8; /* Light Blue */
+  margin: 0 1rem;
+  font-size: 1.1rem;
 }
 
 .navbar a:hover {
-  color: #007bff; /* Change color on hover (blue) */
+  color: #E38E49; /* Accent Orange */
 }
 
-
+/* Footer Styling */
 footer {
   text-align: center;
   margin-top: 3rem;
-  border-top: 1px solid #ddd;
-  padding-top: 1rem;
+  padding: 1rem;
+  background-color: #0A3981; /* Dark Blue */
+  color: #D4EBF8; /* Light Blue */
   font-size: 0.9rem;
-  color: #777;
 }
