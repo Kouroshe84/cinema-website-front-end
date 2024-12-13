@@ -98,7 +98,7 @@ const Account = () => {
                     }
                 }
                 else{
-                    alert("Incorrect Login Information.");  
+                    setErrorMessage("Incorrect Login Information.");  
                 }
         } catch (error) {
             const message =
