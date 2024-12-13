@@ -31,16 +31,23 @@ const Account = () => {
         return null;
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         const validationError = validForm();
         if(validationError){
             setErrorMessage(validationError);
             return;
         }
-
         setErrorMessage(""); //clear Error message before fetch
-        setIsLoading(true); //prevent duplicate submission
+        setIsLoading(true); //prevent duplicate submission        
+        if (isSignUp) {
+            await handleSignUp();
+        } else {
+            await handleLogin();
+        }
+    }
+
+    const handleSignUp = async () => {
 
         try {
             // Call the backend to create a new user
@@ -54,29 +61,6 @@ const Account = () => {
             const response = await axios.post(`${apiBaseUrl}/api/users`, userRegInfo);
             console.log(response.data);
             alert("Sign-up successful!");
-
-
-
-
-                // const response = await axios.post(`${apiBaseUrl}/api/users`, userRegInfo);
-                // console.log(response);
-                // alert('Sign-Up successful!');
-                // setUser(response.data.name);
-                // navigate('/');
-            // } else {
-            //     if (!formData.email || !formData.password) {
-            //         setErrorMessage('Email and Password are required!');
-            //         return;
-            //     }
-            //     // Call the backend to authenticate the user
-            //     const response = await axios.post(`${apiBaseUrl}/api/users/login`, {
-            //         email: formData.email,
-            //         password: formData.password,
-            //     });
-            //     alert('Login successful!');
-            //     setUser(response.data.name);
-            //     navigate('/');
-            // }
         } catch (error) {
             const message =
                 error.response?.data?.message || 'An error occurred. Please try again.';
@@ -86,6 +70,40 @@ const Account = () => {
             setIsLoading(false);
         }
     };
+
+
+    const handleLogin = async() => {
+        try {
+            // Call the backend to retrieve a user
+            const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+            const inputInfo = {
+                email: formData.email,
+                password: formData.password
+            }
+
+            const response = await axios.get(`${apiBaseUrl}/api/users`);
+            const user = response.data.find(user => user.email === inputInfo.email);
+                if(user){
+                    console.log(response.data);
+                    if(user.password === inputInfo. password){
+                    alert("Login successful!");
+                }
+                    else{
+                        setErrorMessage("Incorrect Login Information.");
+                    }
+                }
+                else{
+                    alert("Incorrect Login Information.");  
+                }
+        } catch (error) {
+            const message =
+                error.response?.data?.message || 'An error occurred. Please try again.';
+            setErrorMessage(message);
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }
 
     return (
         <div className="account-container">
