@@ -10,18 +10,37 @@ import ContactUs from "./pages/ContactUs";
 import CreatePage from "./pages/CreatePage";
 import Account from "./pages/Account";
 import Footer from "./pages/components/Footer";
+import {useUser} from "./pages/components/UserContext";
 import './App.css';
 
 const App = () => {
+    const {user} = useUser();
+    const handleLogout = () =>{
+        localStorage.removeItem('user');
+        window.location.href="/";
+    }
+
     return (
         <div className="content">
             {/* Navigation Bar */}
             <nav className="navbar">
+            <div className="navbar-left">
+                {user ? (
+                    <>
+                        <strong>Welcome, {user.name}!</strong>
+                        <a href="/" onClick={handleLogout}>Logout</a>
+                    </>
+                ) : (
+                    <Link to="/account">Login</Link>
+                )}
+            </div>
+            <div className="navbar-right">
                 <Link to="/">Home Page</Link>
                 <Link to="/create">Create New Movie</Link>
                 <Link to="/about">About Us</Link>
                 <Link to="/contact">Contact Us</Link>
                 <Link to="/account">Account</Link>
+            </div>
             </nav>
 
             {/* Page Routes */}

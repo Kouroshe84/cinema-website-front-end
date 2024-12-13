@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useUser} from './components/UserContext';
 import axios from 'axios';
 import './Account.css'; // Ensure you add the CSS for this file
 
 const Account = () => {
+    const {setUser} = useUser();
+    const [username, setUsername] = useState("");
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -86,6 +89,8 @@ const Account = () => {
                 if(user){
                     console.log(response.data);
                     if(user.password === inputInfo. password){
+                    setUser({name: user.name});
+                    navigate("/");
                     alert("Login successful!");
                 }
                     else{

@@ -88,17 +88,31 @@
 /* Navbar Styling */
 .navbar {
   width: 100%;
-  position: fixed;
+  position: fixed; /* Fixed position at the top */
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1000; /* Ensure navbar stays on top */
   background-color: #1F509A; /* Medium Blue */
   color: #D4EBF8; /* Light Blue */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  padding: 1rem 2rem; /* Add padding */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Space out the navbar items */
+}
+
+/* Navbar Left Section */
+.navbar-left {
+  display: flex;
+  align-items: center;           /* Center items vertically */
+  gap: 1rem;                     /* Space between items */
+}
+
+/* Navbar Right Section */
+.navbar-right {
+  display: flex;
+  align-items: center;           /* Center items vertically */
+  gap: 1rem;                     /* Space between links */
 }
 
 .navbar a {
