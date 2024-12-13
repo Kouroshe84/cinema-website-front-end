@@ -1,25 +1,35 @@
-.seat-selection-container {
-    text-align: center;
-    padding: 20px;
-}
-
-.seating-grid {
+.seat-selection {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-.seating-row {
-    margin: 10px 0;
+.seat-selection h1,
+.seat-selection h2,
+.seat-selection h3 {
+    text-align: center;
+}
+
+.seating {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(6, 40px); /* Create 6 equal columns */
+    grid-gap: 10px; /* Add space between the seats */
+    justify-content: center; /* Center the grid horizontally */
+    margin-top: 20px;
 }
 
 .seat {
     width: 40px;
     height: 40px;
-    margin: 5px;
     background-color: #ddd;
     border: 1px solid #aaa;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the seat label */
 }
 
 .seat.booked {
@@ -31,11 +41,12 @@
     background-color: #4caf50;
 }
 
-.booking-actions {
+.summary {
     margin-top: 20px;
+    text-align: center;
 }
 
-.book-now {
+button {
     padding: 10px 20px;
     background-color: #4caf50;
     color: white;
@@ -43,7 +54,12 @@
     cursor: pointer;
 }
 
-.book-now:hover {
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
     background-color: #45a049;
 }
 
