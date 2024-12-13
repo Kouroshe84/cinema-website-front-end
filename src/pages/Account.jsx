@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Account.css'; // Ensure you add the CSS for this file
 
-const Account = ({ setUser }) => {
+const Account = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -12,6 +12,7 @@ const Account = ({ setUser }) => {
         confirmPassword: '',
     });
     const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false); //prevent duplicate submissions
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -19,45 +20,70 @@ const Account = ({ setUser }) => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = async () => {
-        setErrorMessage(''); // Clear any existing errors
+    const validForm = () =>{
+        if(isSignUp){
+            if(!formData.name) return "Name is required";
+            if(formData.password !== formData.confirmPassword) return "Passwords do not match";
+        }
+        if(!formData.email.includes("@")) return "Invalid email address";
+        if(formData.password.length < 6) return "Password must be at leat 6 characters";
+        if(!formData.email || !formData.password || (isSignUp && !formData.name)) return "All fields are required";
+        return null;
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const validationError = validForm();
+        if(validationError){
+            setErrorMessage(validationError);
+            return;
+        }
+
+        setErrorMessage(""); //clear Error message before fetch
+        setIsLoading(true); //prevent duplicate submission
+
         try {
-            if (isSignUp) {
-                if (!formData.name || !formData.email || !formData.password) {
-                    setErrorMessage('All fields are required!');
-                    return;
-                }
-                if (formData.password !== formData.confirmPassword) {
-                    setErrorMessage('Passwords do not match!');
-                    return;
-                }
-                // Call the backend to create a new user
-                const response = await axios.post('/api/users', {
-                    name: formData.name,
-                    email: formData.email,
-                    password: formData.password,
-                });
-                alert('Sign-Up successful!');
-                setUser(response.data.name);
-                navigate('/');
-            } else {
-                if (!formData.email || !formData.password) {
-                    setErrorMessage('Email and Password are required!');
-                    return;
-                }
-                // Call the backend to authenticate the user
-                const response = await axios.post('/api/users/login', {
-                    email: formData.email,
-                    password: formData.password,
-                });
-                alert('Login successful!');
-                setUser(response.data.name);
-                navigate('/');
+            // Call the backend to create a new user
+            const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+            const userRegInfo = {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password
             }
+
+            const response = await axios.post(`${apiBaseUrl}/api/users`, userRegInfo);
+            console.log(response.data);
+            alert("Sign-up successful!");
+
+
+
+
+                // const response = await axios.post(`${apiBaseUrl}/api/users`, userRegInfo);
+                // console.log(response);
+                // alert('Sign-Up successful!');
+                // setUser(response.data.name);
+                // navigate('/');
+            // } else {
+            //     if (!formData.email || !formData.password) {
+            //         setErrorMessage('Email and Password are required!');
+            //         return;
+            //     }
+            //     // Call the backend to authenticate the user
+            //     const response = await axios.post(`${apiBaseUrl}/api/users/login`, {
+            //         email: formData.email,
+            //         password: formData.password,
+            //     });
+            //     alert('Login successful!');
+            //     setUser(response.data.name);
+            //     navigate('/');
+            // }
         } catch (error) {
             const message =
                 error.response?.data?.message || 'An error occurred. Please try again.';
             setErrorMessage(message);
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -67,44 +93,48 @@ const Account = ({ setUser }) => {
                 <h2>{isSignUp ? 'Create an Account' : 'Login to Your Account'}</h2>
 
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-                {isSignUp && (
+                {/* Use form element to prevent DOM warning for type password */}
+                <form> 
+                    {isSignUp && (
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                        />
+                    )}
                     <input
-                        type="text"
-                        placeholder="Name"
-                        name="name"
-                        value={formData.name}
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        value={formData.email}
                         onChange={handleInputChange}
                     />
-                )}
-                <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                />
-                {isSignUp && (
                     <input
                         type="password"
-                        placeholder="Confirm Password"
-                        name="confirmPassword"
-                        value={formData.confirmPassword}
+                        placeholder="Password"
+                        name="password"
+                        value={formData.password}
                         onChange={handleInputChange}
                     />
-                )}
+                    {isSignUp && (
+                        <input
+                            type="password"
+                            placeholder="Confirm Password"
+                            name="confirmPassword" 
+                            value={formData.confirmPassword}
+                            onChange={handleInputChange}
+                        />
+                    )}
 
-                <button className="submit-btn" onClick={handleSubmit}>
-                    {isSignUp ? 'Sign Up' : 'Login'}
-                </button>
+                    <button type= "button"
+                    className="submit-btn" onClick={handleSubmit} disabled={isLoading}>
+                        {isSignUp ? 'Sign Up' : 'Login'}
+                    </button>
 
+                </form>
+                
                 <div className="switch-account">
                     <span>
                         {isSignUp ? 'Already have an account?' : "Don't have an account?"}

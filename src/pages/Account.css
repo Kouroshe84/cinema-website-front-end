@@ -73,3 +73,8 @@
 .switch-account button:hover {
     text-decoration: underline;
 }
+
+.submit-btn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
