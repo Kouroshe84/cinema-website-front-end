@@ -9,6 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import CreatePage from "./pages/CreatePage";
 import Account from "./pages/Account";
+import Booking from "./pages/Booking";
 import Footer from "./pages/components/Footer";
 import {useUser} from "./pages/components/UserContext";
 import './App.css';
@@ -27,8 +28,9 @@ const App = () => {
             <div className="navbar-left">
                 {user ? (
                     <>
-                        <strong>Welcome, {user.name}!</strong>
+                        <a>Welcome, {user.name}!</a>
                         <a href="/" onClick={handleLogout}>Logout</a>
+                        <Link to="/booking" element={<Booking/>}>Booking</Link>
                     </>
                 ) : (
                     <Link to="/account">Login</Link>
@@ -54,10 +56,11 @@ const App = () => {
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/create" element={<CreatePage />} />
                 <Route path="/account" element={<Account/>} />
+                <Route path="/booking" element={<Booking/>}/>
             </Routes>
 
             {/* Footer */}
-            <Footer />
+            <Footer className="footer"/>
         </div>
     );
 };
