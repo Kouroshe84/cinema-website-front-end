@@ -9,7 +9,6 @@ const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const {user} = useUser();
-  const userEmail = user.email;
 
   const { selectedSeats, selectedShowTime, totalPrice } = location.state || {};
   const [movie, setMovie] = useState(null);
@@ -38,21 +37,28 @@ const Checkout = () => {
     };
 
     fetchMovie();
+    if(user){
+      const userEmail = user.email;
+      console.log(`user: ${userEmail}`);
 
-    const fetchUserid = async() => {
-      try {
-        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-        const response = await axios.get(`${apiBaseUrl}/api/users`);
-        const user = response.data.find(user => user.email === userEmail);
-        setUserId(user._id);
-      } catch (err){
-        console.error("Error fetching user details:", err);
-        setError("Failed to load user details.");
-        setLoading(false);
-      }
-    };
-
-    fetchUserid();
+      const fetchUserid = async() => {
+        try {
+          const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+          const response = await axios.get(`${apiBaseUrl}/api/users`);
+          const user = response.data.find(user => user.email === userEmail);
+          setUserId(user._id);
+        } catch (err){
+          console.error("Error fetching user details:", err);
+          setError("Failed to load user details.");
+          setLoading(false);
+        }
+      };
+  
+      fetchUserid();
+    }
+    else{
+      console.log(`guest user.`);
+    }
   }, [id]);
 
   const handleChange = (e) => {
@@ -88,7 +94,7 @@ const Checkout = () => {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
       const order = {
-        userid: user ? userId : "default_user",
+        userid: user ? userId : "guest_user",
         movieid: id,
         seats: selectedSeats,
         totalPrice: totalPrice,
@@ -121,6 +127,10 @@ const Checkout = () => {
         <p><strong>Showtime:</strong> {selectedShowTime || "Not selected"}</p>
         <p><strong>Seats:</strong> {selectedSeats?.join(", ") || "None"}</p>
         <p><strong>Total Price:</strong> ${totalPrice || 0}</p>
+        {user 
+        ? (<p><strong>Checkout as:</strong>{user.name}</p>)
+        : (<p><strong>Checkout as:</strong>Guest</p>)
+        }
       </div>
       <form onSubmit={(e) => e.preventDefault()}>
         <input
