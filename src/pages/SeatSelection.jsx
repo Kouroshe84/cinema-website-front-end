@@ -30,7 +30,10 @@ const SeatSelection = () => {
                 const seatsResponse = await fetch(`${apiBaseUrl}/api/orders/movie/${id}`);
                 const orders = await seatsResponse.json();
                 const seats = orders
-                    .filter((order) => order.showTime === selectedShowTime)
+                .filter((order) =>
+                        order.showTime === selectedShowTime && 
+                        (!order.isDeleted || order.isDeleted === false)
+                )
                     .flatMap((order) => order.seats);
                 setBookedSeats(seats);
             } catch (err) {
