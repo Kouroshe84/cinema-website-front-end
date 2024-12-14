@@ -24,7 +24,7 @@ const SeatSelection = () => {
                 const movieResponse = await fetch(`${apiBaseUrl}/api/movies/${id}`);
                 const movieData = await movieResponse.json();
                 setMovie(movieData);
-                console.log(movieData);
+                //console.log(movieData);
 
                 // Fetch booked seats for the selected showtime
                 const seatsResponse = await fetch(`${apiBaseUrl}/api/orders/movie/${id}`);

@@ -4,7 +4,7 @@ import "./MovieDetails.css";
 
 const MovieDetails = () => {
     const { id } = useParams();
-    console.log(id);
+    //console.log(id);
     const [movie, setMovie] = useState(null);
     const [showtimes, setShowtimes] = useState([]);
     const [selectedShowTime, setSelectedShowTime] = useState(null);
