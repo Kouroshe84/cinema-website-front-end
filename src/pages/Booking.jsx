@@ -43,6 +43,19 @@ const Booking = () => {
 
         }, [""]);
 
+        const handleDeleteOrder = async(orderId) =>{
+            try{
+                const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+                const response = await axios.patch(`${apiBaseUrl}/api/orders/${orderId}/delete`);
+                if(response.status === 200){
+                    console.log("Order deleted:", response.data);
+                    setOrders(orders.filter((order) => order.orderid !== orderId))
+                }
+            } catch(err){
+                console.err("Error deleting order:", err);
+            }
+        }
+
         return (
             <div className="booking-container">
               <h1>Your Orders</h1>
@@ -60,6 +73,7 @@ const Booking = () => {
                             <p><strong>Showtime:</strong> {order.showTime}</p>
                             <p><strong>Movie:</strong> {movie ? movie.title : order.movieid}</p>
                             <p><strong>Order Date:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+                            <button onClick={() => handleDeleteOrder(order.orderid)} className="delete-button">Delete Order</button>
                           </div>
                         )
                   }

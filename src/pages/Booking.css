@@ -17,13 +17,16 @@
   }
   
   /* Style for each order card */
-  .order-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: transform 0.3s ease-in-out;
-  }
+.order-card {
+  display: flex;
+  flex-direction: column; /* Align content vertically */
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  position: relative; /* Enable positioning */
+}
   
   .order-card:hover {
     transform: translateY(-5px);
@@ -45,4 +48,4 @@
   
   .order-card strong {
     color: #333;
-  }v
+  }
