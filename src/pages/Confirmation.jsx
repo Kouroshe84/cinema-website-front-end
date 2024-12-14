@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { QRCode } from "react-qrcode";
 import "./Confirmation.css";
 
 const Confirmation = () => {
@@ -38,6 +39,15 @@ const Confirmation = () => {
     if (loading) return <h2>Loading order details...</h2>;
     if (error) return <h2>{error}</h2>;
 
+    const qrData = JSON.stringify({
+        orderId: id, 
+        movieTitle: movie?.title,
+        showTime: order?.showTime,
+        seats: order?.seats,
+        totalPrice: order?.totalPrice,
+        isDeleted: order?.isDeleted,
+    })
+
     return (
         <div className="confirmation">
             <h1>Thank You for Your Purchase!</h1>
@@ -46,6 +56,10 @@ const Confirmation = () => {
             <p><strong>Showtime:</strong> {order.showTime || "Not available"}</p>
             <p><strong>Seats:</strong> {order.seats?.join(", ") || "No seats selected"}</p>
             <p><strong>Total Price:</strong> ${order.totalPrice || "0.00"}</p>
+            {/* Display QR Code */}
+            <div className="qr-code">
+                <QRCode value={qrData} size={150} />
+            </div>
         </div>
     );
 };
