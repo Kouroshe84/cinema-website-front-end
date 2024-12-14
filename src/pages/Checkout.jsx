@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "./Checkout.css";
 import axios from "axios";
+import {useUser} from "./components/UserContext";
 
 const Checkout = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const {user} = useUser();
+  const userEmail = user.email;
 
   const { selectedSeats, selectedShowTime, totalPrice } = location.state || {};
   const [movie, setMovie] = useState(null);
@@ -17,6 +20,7 @@ const Checkout = () => {
     expiryDate: "",
     cvv: "",
   });
+  const [userId, setUserId] = useState("default_user");
 
   // Fetch movie details
   useEffect(() => {
@@ -34,6 +38,21 @@ const Checkout = () => {
     };
 
     fetchMovie();
+
+    const fetchUserid = async() => {
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+        const response = await axios.get(`${apiBaseUrl}/api/users`);
+        const user = response.data.find(user => user.email === userEmail);
+        setUserId(user._id);
+      } catch (err){
+        console.error("Error fetching user details:", err);
+        setError("Failed to load user details.");
+        setLoading(false);
+      }
+    };
+
+    fetchUserid();
   }, [id]);
 
   const handleChange = (e) => {
@@ -67,16 +86,17 @@ const Checkout = () => {
 
     try {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
       const order = {
-        userid: "user_456",
+        userid: user ? userId : "default_user",
         movieid: id,
         seats: selectedSeats,
         totalPrice: totalPrice,
         showTime: selectedShowTime
       };
-      //console.log(order);
+
       const response = await axios.post(`${apiBaseUrl}/api/orders`, order);
-      //console.log(response.data.order.orderid);
+
       if (response.data.order.orderid) {
         alert("Payment successful! Redirecting to confirmation page...");
         navigate(`/confirmation/${response.data.order.orderid}`);

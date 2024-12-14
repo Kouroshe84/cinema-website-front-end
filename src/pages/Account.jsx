@@ -6,7 +6,7 @@ import './Account.css'; // Ensure you add the CSS for this file
 
 const Account = () => {
     const {setUser} = useUser();
-    const [username, setUsername] = useState("");
+    // const [username, setUsername] = useState("");
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -62,7 +62,7 @@ const Account = () => {
             }
 
             const response = await axios.post(`${apiBaseUrl}/api/users`, userRegInfo);
-            console.log(response.data);
+            //console.log(response.data);
             alert("Sign-up successful!");
         } catch (error) {
             const message =
@@ -87,9 +87,13 @@ const Account = () => {
             const response = await axios.get(`${apiBaseUrl}/api/users`);
             const user = response.data.find(user => user.email === inputInfo.email);
                 if(user){
-                    console.log(response.data);
-                    if(user.password === inputInfo. password){
-                    setUser({name: user.name});
+                    console.log(user._id);
+                    if(user.password === inputInfo.password){
+                    setUser({
+                        name: user.name,
+                        email: user.email,
+                        userid: user._id
+                    });
                     navigate("/");
                     alert("Login successful!");
                 }
